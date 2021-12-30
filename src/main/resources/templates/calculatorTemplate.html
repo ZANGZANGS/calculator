@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <h1>환율 계산</h1>
+<form action="post">
+    <div>송금국가: 미국(USD)</div>
+    <div>수취국가:
+        <select>
+            <option>한국(KRW)</option>
+            <option>일본(JPY)</option>
+            <option>필리핀(PHP)</option>
+        </select>
+    </div>
+    <div>환율: 1,234.123
+        <span>KRW</span>/USD
+    </div>
+    <div>
+        송금액: <input type="number" value="100">USD
+    </div>
+    <div>
+        <button>Submit</button>
+    </div>
+    <div>
+        수취 금액은 <span>111,993.00</span>&nbsp;<span>KRW</span>입니다.
+    </div>
+</form>
+</body>
+</html>
