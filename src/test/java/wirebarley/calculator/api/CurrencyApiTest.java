@@ -1,9 +1,14 @@
 package wirebarley.calculator.api;
 
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import net.minidev.json.parser.JSONParser;
 import org.assertj.core.api.Assertions;
+import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.json.GsonJsonParser;
+import org.springframework.boot.json.JsonParser;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +16,9 @@ import org.springframework.http.ResponseEntity;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 
 @SpringBootTest
@@ -73,6 +80,19 @@ class CurrencyApiTest {
 
         //then
         Assertions.assertThat(responseEntity1).isInstanceOf(ResponseEntity.class);
+
+    }
+
+    @Test
+    public void list(){
+        //given
+
+        //when
+        ResponseEntity<HashMap<String, Object>> responseEntity = currencyApi.list();
+        System.out.println(responseEntity.toString());
+        //then
+        Assertions.assertThat(responseEntity).isInstanceOf(ResponseEntity.class);
+
 
     }
 
