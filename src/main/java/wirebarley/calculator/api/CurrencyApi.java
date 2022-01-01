@@ -48,7 +48,7 @@ public class CurrencyApi  implements CurrencyApiInterface{
      */
     @Override
     public ResponseEntity<HashMap<String,Object>> historical(String date,String source, String[] currencies) {
-        final String ENDPOINT = "historical";
+//        final String ENDPOINT = "historical";
         return ResponseEntity.ok(null);
     }
 
@@ -77,7 +77,7 @@ public class CurrencyApi  implements CurrencyApiInterface{
      */
     @Override
     public ResponseEntity<HashMap<String,Object>> timeframe(String start_date, String end_date, String source, String[] currencies) {
-        final String ENDPOINT = "timeframe";
+//        final String ENDPOINT = "timeframe";
         return ResponseEntity.ok(null);
     }
 
@@ -86,42 +86,44 @@ public class CurrencyApi  implements CurrencyApiInterface{
      */
     @Override
     public ResponseEntity<HashMap<String,Object>> change(String start_date, String end_date, String source, String[] currencies) {
-        final String ENDPOINT = "change";
+//        final String ENDPOINT = "change";
         return ResponseEntity.ok(null);
     }
 
     /**
+     * "list" - A full list of supported currencies can be accessed both in JSON Format (access key required) and on this website.
+     */
+    @Override
+    public ResponseEntity<HashMap<String, Object>> list() {
+        final String ENDPOINT = "list";
+        return callApi(generateURL(ENDPOINT, new HashMap<>()));
+    }
+
+    /**
      * https://currencylayer.com/ API 호출
-     * @param url
-     * @return ResponseEntity<JSONPObject>
      */
     private ResponseEntity<HashMap<String,Object>> callApi(URI url){
 
-        ResponseEntity<HashMap<String,Object>> responseEntity = null;
+        HashMap<String,Object> result = null;
 
         try{
-            responseEntity = new RestTemplate()
-                    .getForEntity(url, (Class)HashMap.class);
+            RestTemplate restTemplate = new RestTemplate();
+            result = restTemplate.getForObject(url, HashMap.class);
 
-        } catch (HttpStatusCodeException e) { //응답코드 에러
+
+
+        } catch (HttpStatusCodeException | UnknownHttpStatusCodeException | ResourceAccessException e) {
             e.printStackTrace();
-        } catch (UnknownHttpStatusCodeException e){ //알수 없는 응답코드
-            e.printStackTrace();
-        } catch (ResourceAccessException e){ //네트워크 에러
-            e.printStackTrace();
-        } finally {
-            if(null == responseEntity){
-                responseEntity = ResponseEntity.ok(null);
-            }
         }
-        return responseEntity;
+        //응답코드 에러
+        //알수 없는 응답코드
+        //네트워크 에러
+
+        return ResponseEntity.ok(result);
     }
 
     /**
      *
-     * @param endPoint
-     * @param param
-     * @return
      */
     private URI generateURL(String endPoint, HashMap<String, String> param){
 
