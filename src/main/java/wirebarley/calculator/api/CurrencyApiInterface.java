@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.util.JSONPObject;
 import org.springframework.http.ResponseEntity;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public interface CurrencyApiInterface {
     /**
@@ -63,4 +64,9 @@ public interface CurrencyApiInterface {
      * currencies	[optional] Specify a comma-separated list of currency codes to limit your API response to specific currencies.
      */
     public ResponseEntity<HashMap<String,Object>> change(String start_date, String end_date, String source, String[] currencies);
+
+    /**
+     * "list" - A full list of supported currencies can be accessed both in JSON Format (access key required) and on this website.
+     */
+    public ResponseEntity<HashMap<String,Object>> list();
 }
