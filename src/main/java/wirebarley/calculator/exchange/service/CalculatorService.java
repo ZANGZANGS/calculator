@@ -1,13 +1,14 @@
 package wirebarley.calculator.exchange.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import wirebarley.calculator.api.CurrencyApi;
 import wirebarley.calculator.exchange.dto.CalculatorDto;
 
-import java.math.BigDecimal;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Objects;
 
 @Service
 public class CalculatorService {
@@ -19,6 +20,12 @@ public class CalculatorService {
         this.currencyApi = currencyApi;
     }
 
+    /**
+     * 화면 로딩시 필요한 환율 정보를 조회하는 서비스
+     * @param source ()
+     * @param currencies
+     * @return List (화폐, 설명, 환율)
+     */
     public List<String[]> getCurrencyListService(String source, String[] currencies){
 
         HashMap<String, Object> listEntityBody = currencyApi.list().getBody();
@@ -43,6 +50,12 @@ public class CalculatorService {
 
     }
 
+    /**
+     * 환율 계산 서비스
+     * api 사용 불가로 주석 처리 후 계산
+     * @param req (from(String), to(String), amount(BigDecimal), date(String))
+     * @return res(amount(BigDecimal))
+     */
     public CalculatorDto.Res convertService(CalculatorDto.Req req){
 
 //        convert api 유료,,

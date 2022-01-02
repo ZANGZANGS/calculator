@@ -1,12 +1,10 @@
 package wirebarley.calculator.api;
 
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import org.springframework.http.ResponseEntity;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.HashMap;
-import java.util.Map;
+
 
 public interface CurrencyApiInterface {
     /**

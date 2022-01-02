@@ -1,25 +1,25 @@
 package wirebarley.calculator.exchange.dto;
 
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 
-
+/**
+ * 환율 계산에 필요한 DTO Class
+ */
 public class CalculatorDto {
-
-//    @Getter
-//    @AllArgsConstructor
-//    @Builder
-
 
     @Getter@Setter
     @Builder
     @AllArgsConstructor
     public static class Req {
-        private String from;
-        private String to;
-        private BigDecimal amount;
+        private String from;    //from
+        private String to;      //to
+        private BigDecimal amount;  // 금액
         private BigDecimal rate; //환율
     }
 
@@ -27,7 +27,7 @@ public class CalculatorDto {
     @Builder
     @AllArgsConstructor
     public static class Res{
-        private BigDecimal amount;
+        private BigDecimal amount;  //금액
         boolean success;
     }
 }

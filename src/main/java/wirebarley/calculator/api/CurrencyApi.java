@@ -10,12 +10,16 @@ import org.springframework.web.client.UnknownHttpStatusCodeException;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Optional;
 
+/**
+ *  api 호출에 필요한 메서드를 CurrencyApiInterface 인터페이스를 상속받아 구현
+ *  - request 요청시 optional한 값을 오버로딩으로 구현
+ *  - 미사용 메서드는 구현하지 않음
+ */
 @Component
 public class CurrencyApi  implements CurrencyApiInterface{
     @Value("${api.accesskey}") private String ACCESS_KEY;
@@ -42,7 +46,7 @@ public class CurrencyApi  implements CurrencyApiInterface{
         param.put("source", source);
         param.put("currencies", String.join(",", Optional.ofNullable(currencies).orElseGet(() -> new String[]{})));
 
-        return callApi(generateURL(ENDPOINT, param));
+        return callApi(generateURI(ENDPOINT, param));
     }
 
     /**
@@ -70,7 +74,7 @@ public class CurrencyApi  implements CurrencyApiInterface{
         param.put("amount", amount.toPlainString());
         param.put("date", date);
 
-        return callApi(generateURL(ENDPOINT, param));
+        return callApi(generateURI(ENDPOINT, param));
     }
 
 
@@ -98,11 +102,11 @@ public class CurrencyApi  implements CurrencyApiInterface{
     @Override
     public ResponseEntity<HashMap<String, Object>> list() {
         final String ENDPOINT = "list";
-        return callApi(generateURL(ENDPOINT, new HashMap<>()));
+        return callApi(generateURI(ENDPOINT, new HashMap<>()));
     }
 
     /**
-     * https://currencylayer.com/ API 호출
+     * https://currencylayer.com/ API 호출 메서드
      */
     private ResponseEntity<HashMap<String,Object>> callApi(URI url){
 
@@ -125,9 +129,9 @@ public class CurrencyApi  implements CurrencyApiInterface{
     }
 
     /**
-     *
+     * URI 생성 메서드
      */
-    private URI generateURL(String endPoint, HashMap<String, String> param){
+    private URI generateURI(String endPoint, HashMap<String, String> param){
 
         Iterator<String> iter = param.keySet().iterator();
 

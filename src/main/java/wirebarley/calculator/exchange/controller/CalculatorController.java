@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import wirebarley.calculator.exchange.dto.CalculatorDto;
 import wirebarley.calculator.exchange.service.CalculatorService;
 
-import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -28,7 +27,7 @@ public class CalculatorController {
     }
 
     @GetMapping("/")
-    public String templatController(Model model){
+    public String templateController(Model model){
 
         List<String[]> currencyList = calculatorService.getCurrencyListService(source, currencies);
         model.addAttribute("currencyList", currencyList);
