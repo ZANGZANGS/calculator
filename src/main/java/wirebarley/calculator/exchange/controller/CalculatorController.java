@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import wirebarley.calculator.exchange.dto.CalculatorDto;
+import wirebarley.calculator.exchange.service.CalculatorService;
 
 import java.util.HashMap;
 import java.util.List;
@@ -38,8 +40,8 @@ public class CalculatorController {
 
     @PostMapping("/convert")
     @ResponseBody
-    public Object convertController(@ModelAttribute HashMap<String, Object> hashMap, Model model){
+    public Object convertController(@ModelAttribute CalculatorDto.Req req, Model model){
 
-        return null;
+        return calculatorService.convertService(req);
     }
 }

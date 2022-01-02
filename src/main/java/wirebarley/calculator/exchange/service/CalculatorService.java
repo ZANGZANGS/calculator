@@ -1,9 +1,12 @@
-package wirebarley.calculator.exchange.controller;
+package wirebarley.calculator.exchange.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import wirebarley.calculator.api.CurrencyApi;
+import wirebarley.calculator.exchange.dto.CalculatorDto;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -40,11 +43,17 @@ public class CalculatorService {
         return list;
 
     }
-//    public void liveService(String source, String[] currencies){
-//         ResponseEntity<HashMap<String,Object>> responseEntity = currencyApi.live(source, currencies);
-//    }
-//
-//    public void convertService(){
-//
-//    }
+
+    public CalculatorDto.Res convertService(CalculatorDto.Req req){
+
+//        convert api 유료,,
+//        ResponseEntity<HashMap<String,Object>> responseEntity = currencyApi.convert(req.getFrom(),req.getTo(),req.getAmount());
+
+        CalculatorDto.Res res = CalculatorDto.Res.builder()
+                .amount(req.getAmount().multiply(req.getRate()))
+                .success(true)
+                .build();
+
+        return  res;
+    }
 }
