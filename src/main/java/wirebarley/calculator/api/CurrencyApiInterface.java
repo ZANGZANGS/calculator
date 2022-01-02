@@ -3,6 +3,8 @@ package wirebarley.calculator.api;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import org.springframework.http.ResponseEntity;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,7 +41,7 @@ public interface CurrencyApiInterface {
      * amount	    [Required] Specify the amount to convert.
      * date	        [optional] Specify a date to use historical rates for this conversion. (Format: YYYY-MM-DD)
      */
-    public ResponseEntity<HashMap<String,Object>> convert(String from, String to, String amount, String date);
+    public ResponseEntity<HashMap<String,Object>> convert(String from, String to, BigDecimal amount, String date);
 
     /**
      * "timeframe" - request exchange rates for a specific period of time

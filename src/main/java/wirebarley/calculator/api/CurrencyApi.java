@@ -9,6 +9,8 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.client.UnknownHttpStatusCodeException;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -55,17 +57,17 @@ public class CurrencyApi  implements CurrencyApiInterface{
     /**
      * "convert" - convert one currency to another
      */
-    public ResponseEntity<HashMap<String,Object>> convert(String from, String to, String amount) {
+    public ResponseEntity<HashMap<String,Object>> convert(String from, String to, BigDecimal amount) {
         return convert(from, to, amount, null);
     }
     @Override
-    public ResponseEntity<HashMap<String,Object>> convert(String from, String to, String amount, String date) {
+    public ResponseEntity<HashMap<String,Object>> convert(String from, String to, BigDecimal amount, String date) {
         final String ENDPOINT = "convert";
 
         HashMap<String, String> param = new HashMap<>();
         param.put("from", from);
         param.put("to", to);
-        param.put("amount", amount);
+        param.put("amount", amount.toPlainString());
         param.put("date", date);
 
         return callApi(generateURL(ENDPOINT, param));
