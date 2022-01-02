@@ -25,6 +25,7 @@ format = {
         let moneyStr = String(money);
 
         number= String(money).split(".")[0] || '0';
+        number = Number(number.replace(/[^0-9]/g, "")).toString(); //0 제거 ex) 00123 -> 123
 
         if(moneyStr.indexOf('.') <0) {
             decimal='00';
