@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -73,10 +74,10 @@ class CurrencyApiTest {
         //String from, String to, String amount, String date
 
         //when
-        ResponseEntity<HashMap<String, Object>> responseEntity1 = currencyApi.convert("USD", "KRW", "100");
+        ResponseEntity<HashMap<String, Object>> responseEntity1 = currencyApi.convert("USD", "KRW", new BigDecimal(100));
         System.out.println(responseEntity1.toString());
 
-        ResponseEntity<HashMap<String, Object>> responseEntity2 = currencyApi.convert("USD", "JPY", "300", "2021-12-31");
+        ResponseEntity<HashMap<String, Object>> responseEntity2 = currencyApi.convert("USD", "JPY", new BigDecimal(300), "2021-12-31");
 
         //then
         Assertions.assertThat(responseEntity1).isInstanceOf(ResponseEntity.class);
