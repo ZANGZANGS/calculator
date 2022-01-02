@@ -7,10 +7,7 @@ import wirebarley.calculator.api.CurrencyApi;
 import wirebarley.calculator.exchange.dto.CalculatorDto;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Service
 public class CalculatorService {
@@ -25,7 +22,6 @@ public class CalculatorService {
     public List<String[]> getCurrencyListService(String source, String[] currencies){
 
         HashMap<String, Object> listEntityBody = currencyApi.list().getBody();
-
         HashMap<String, Object> currenciesInfo = listEntityBody.get("currencies") != null ?
                 (HashMap<String, Object>)listEntityBody.get("currencies") : new HashMap<>();
 
@@ -37,7 +33,10 @@ public class CalculatorService {
 
         for (String code : currencies){
             //KRW, 설명, 환율
-            list.add(new String[]{code, (String)currenciesInfo.get(code), (String)quotesInfo.get(source+code)});
+            String rate = quotesInfo.get(source+code) != null ?
+                    String.valueOf(quotesInfo.get(source+code)) : (String)quotesInfo.get(source+code);
+
+            list.add(new String[]{code,(String)currenciesInfo.get(code), rate});
         }
 
         return list;
