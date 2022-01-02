@@ -11,8 +11,7 @@ function event(){
      */
     $('#currencies').change(function(){
         $('#exchange_rate').text($(this).prop('value')); // 환율
-        $('#currency_kind').text(this.options[this.selectedIndex].id); //화폐 종류
-        $('#amount_receivable_kind').text(this.options[this.selectedIndex].id); //화폐 종류
+        $('#currency_kind').text($('#currencies').children(':selected').text()); //화폐 종류
         hideMsg();
     });
 
@@ -75,7 +74,7 @@ function successFunc(res){
     }
     let {amount} = res;
 
-    let msg = '수취 금액은 ' + format.convertMoneyComma(amount) + $('#currencies').children(':selected').text() + '입니다.';
+    let msg = '수취 금액은 ' + format.convertMoneyComma(amount) + $('#currencies').children(':selected').text() + ' 입니다.';
     changeMsgText('result_msg', msg);
 
 }
