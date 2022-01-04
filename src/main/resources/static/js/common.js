@@ -4,8 +4,11 @@ common = {
         let base_url = location.href
         $.ajax({
             method: "POST",
+            contentType: 'application/json',
+            dataType   : 'json',
             url: base_url+url,
-            data: param
+            data : JSON.stringify(param),
+
         })
         .done(function( res ) {
             if(res.success == true){
