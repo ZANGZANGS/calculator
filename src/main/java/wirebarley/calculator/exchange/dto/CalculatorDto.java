@@ -1,10 +1,7 @@
 package wirebarley.calculator.exchange.dto;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigDecimal;
 
@@ -16,6 +13,7 @@ public class CalculatorDto {
     @Getter@Setter
     @Builder
     @AllArgsConstructor
+    @NoArgsConstructor
     public static class Req {
         private String from;    //from
         private String to;      //to
@@ -26,6 +24,7 @@ public class CalculatorDto {
     @Getter@Setter
     @Builder
     @AllArgsConstructor
+    @NoArgsConstructor
     public static class Res{
         private BigDecimal amount;  //금액
         boolean success;
