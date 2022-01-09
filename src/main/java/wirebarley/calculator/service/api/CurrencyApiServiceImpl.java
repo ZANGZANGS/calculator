@@ -1,6 +1,8 @@
 package wirebarley.calculator.service.api;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpStatusCodeException;
@@ -87,20 +89,38 @@ public class CurrencyApiServiceImpl implements CurrencyApiService {
      */
     private ResponseEntity<HashMap<String,Object>> callApi(URI url){
 
-        HashMap<String,Object> result = null;
+        HashMap<String,Object> result = new HashMap<>();
 
         try{
+
+            Optional.ofNullable(url)
+                    .orElseThrow(()-> {
+                        throw new NullPointerException("url이 없습니다.");
+                    });
+
             RestTemplate restTemplate = new RestTemplate();
             result = restTemplate.getForObject(url, HashMap.class);
 
 
 
-        } catch (HttpStatusCodeException | UnknownHttpStatusCodeException | ResourceAccessException e) {
-            e.printStackTrace();
+        } catch (HttpStatusCodeException e) {//응답코드 에러
+            result.put("success", false);
+            result.put("message", "HttpStatusCodeException 발생하였습니다.");
+        } catch (UnknownHttpStatusCodeException e){ //알수 없는 응답코드
+            result.put("success", false);
+            result.put("message", "UnknownHttpStatusCodeException 발생하였습니다.");
+        } catch (ResourceAccessException e){ //네트워크 에러
+            result.put("success", false);
+            result.put("message", "ResourceAccessException 발생하였습니다." );
+        } catch (NullPointerException e){
+            result.put("success", false);
+            result.put("message", "NullPointerException 발생하였습니다. " + e.getMessage());
+        } catch (Exception e){
+            result.put("success", false);
+            result.put("message", "알수 없는 Exception이 발생하였습니다." );
         }
-        //응답코드 에러
-        //알수 없는 응답코드
-        //네트워크 에러
+
+
 
         return ResponseEntity.ok(result);
     }
@@ -127,3 +147,4 @@ public class CurrencyApiServiceImpl implements CurrencyApiService {
 
 
 }
+
