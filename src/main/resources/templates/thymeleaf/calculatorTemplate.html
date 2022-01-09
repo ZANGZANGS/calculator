@@ -24,9 +24,9 @@
     <div>수취국가:
         <select id="currencies" name='currencies'>
             <option th:each="val : ${currencyList}"
-                    th:value="${val[2] == null ? '101.00' : #numbers.formatDecimal(val[2], 0, 2)}"
-                    th:utext="${val[0]}"
-                    th:title="${val[1]}">AED
+                    th:value="${#numbers.formatDecimal(val.getRate() , 0, 2)}"
+                    th:utext="${val.getCurrency()}"
+                    th:title="${val.getContent()}">AED
             </option>
 
 <!--            <option value='AED' title='United Arab Emirates Dirham'>AED</option>-->
@@ -35,8 +35,8 @@
         </select>
     </div>
     <div>환율:
-        <span id="exchange_rate" th:text="${currencyList.get(0)[2] == null ? '101.00' : #numbers.formatDecimal(currencyList.get(0)[2], 0, 2)}"></span>
-        <span id="currency_kind" th:text="${currencyList.get(0)[0]}"></span>/<span th:text="${source}">USD</span>
+        <span id="exchange_rate" th:text="${#numbers.formatDecimal(currencyList.get(0).getRate(), 0, 2)}"></span>
+        <span id="currency_kind" th:text="${currencyList.get(0).getCurrency()}"></span>/<span th:text="${source}">USD</span>
     </div>
     <div>
         송금액: <input type="text" id="remittance_amount" value="100"><span th:text="${source}">USD</span>

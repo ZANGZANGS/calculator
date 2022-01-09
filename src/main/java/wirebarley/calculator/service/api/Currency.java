@@ -14,8 +14,18 @@ public class Currency {
     @AllArgsConstructor
     @Data
     @Builder
+    public static class Req{
+        private String source;
+        private String[] currencies;
+    }
+
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Data
+    @Builder
     public static class Res{
-        private BigDecimal amount;  //금액
-        boolean success;
+        private String currency;
+        private String content;
+        private BigDecimal rate;  //환율
     }
 }

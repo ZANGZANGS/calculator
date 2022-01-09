@@ -11,9 +11,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.math.BigDecimal;
 import java.net.URI;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Optional;
+import java.util.*;
 
 /**
  *  api 호출에 필요한 메서드를 CurrencyApiInterface 인터페이스를 상속받아 구현
@@ -25,12 +23,47 @@ public class CurrencyApiServiceImpl implements CurrencyApiService {
     @Value("${api.accesskey}") private String ACCESS_KEY;
     @Value("${api.baseurl}") private String BASE_URL;
 
+    @Override
+    public List<Currency.Res> getCurrencyList(Currency.Req req) {
+
+        List<Currency.Res> result = new ArrayList<>();
+
+        HashMap<String, Object> list = list();
+        HashMap<String, Object> live = live(req.getSource(), req.getCurrencies());
+
+        if( (boolean)list.get("success")){
+
+            HashMap<String, String> listCurrencies = (HashMap<String, String>)list.get("currencies");
+            HashMap<String, String> liveCurrencies = (boolean)live.get("success") ?
+                    (HashMap<String, String>)live.get("currencies") : new HashMap<>();
+
+            for (String cur : req.getCurrencies()){
+
+                BigDecimal rate = null != liveCurrencies.get(req.getSource() + cur) ?
+                        new BigDecimal(liveCurrencies.get(req.getSource() + cur)): new BigDecimal("100.00");
+
+                Currency.Res res = Currency.Res.builder()
+                        .currency(cur)
+                        .content(listCurrencies.get(cur))
+                        .rate(rate)
+                        .build();
+
+                result.add(res);
+
+            }
+
+        }
+
+        return result;
+
+    }
+
+
+
 
     /**
      * "live" - get the most recent exchange rate data
      */
-
-    @Override
     public HashMap<String,Object> live(String source, String[] currencies){
         final String ENDPOINT = "live";
 
@@ -41,12 +74,9 @@ public class CurrencyApiServiceImpl implements CurrencyApiService {
         return callApi(generateURI(ENDPOINT, param)).getBody();
     }
 
-
-
     /**
      * "list" - A full list of supported currencies can be accessed both in JSON Format (access key required) and on this website.
      */
-    @Override
     public HashMap<String, Object> list() {
         final String ENDPOINT = "list";
         return callApi(generateURI(ENDPOINT, new HashMap<>())).getBody();
@@ -94,5 +124,6 @@ public class CurrencyApiServiceImpl implements CurrencyApiService {
 
         return builder.build().encode().toUri();
     }
+
 
 }

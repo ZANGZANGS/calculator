@@ -15,6 +15,7 @@ import wirebarley.calculator.service.convert.Convert;
 import wirebarley.calculator.service.convert.ConvertService;
 
 import java.util.HashMap;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -31,13 +32,11 @@ public class CalculatorController {
     @GetMapping("/")
     public String templateController(Model model){
 
-//        HashMap<String, Object> body = currencyApiService.list();
-//        System.out.println("currencyApiService.list() = " + body.toString());
-//        HashMap<String, Object> body1 = currencyApiService.live(source, currencies).getBody();
-//        System.out.println("currencyApiService.live() = " + body1.toString());
-//        List<String[]> currencyList = calculatorService.getCurrencyListService(source, currencies);
-//        model.addAttribute("currencyList", currencyList);
-//        model.addAttribute("source",source);
+        Currency.Req req = new Currency.Req(source, currencies);
+
+        List<Currency.Res> currencyList = currencyApiService.getCurrencyList(req);
+        model.addAttribute("currencyList", currencyList);
+        model.addAttribute("source",source);
 
         return "thymeleaf/calculatorTemplate";
     }
