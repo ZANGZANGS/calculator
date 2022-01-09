@@ -1,4 +1,4 @@
-package wirebarley.calculator.exchange.controller;
+package wirebarley.calculator.controller;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
-import wirebarley.calculator.exchange.service.CalculatorService;
+import wirebarley.calculator.service.api.CurrencyApiService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +25,8 @@ class CalculatorControllerTest {
     MockMvc mvc;
 
     @MockBean
-    CalculatorService calculatorService;
+    CurrencyApiService currencyApiService;
+
 
     @Test
     @DisplayName("환율 정보 조회 테스트")
@@ -41,8 +42,8 @@ class CalculatorControllerTest {
         result.add(new String[]{ "PHP", "Philippine Peso", "51.00"});
 
 
-        given(calculatorService.getCurrencyListService(source, currencies))
-                .willReturn(result);
+//        given(calculatorService.getCurrencyListService(source, currencies))
+//                .willReturn(result);
 
 
         //when
