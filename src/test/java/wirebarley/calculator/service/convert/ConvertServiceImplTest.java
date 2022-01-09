@@ -1,6 +1,7 @@
 package wirebarley.calculator.service.convert;
 
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,6 +17,7 @@ class ConvertServiceImplTest {
 
 
     @Test
+    @DisplayName("환율 계산 테스트")
     void convert(){
 
         Convert.Req req = Convert.Req.builder()
